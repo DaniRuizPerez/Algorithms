@@ -1,0 +1,217 @@
+/* Ismael Barbeito Vázquez (i.barbeito)
+	Daniel Ruiz Pérez (d.ruiz.perez) 
+	Algoritmos, curso 2012/2013
+	1/10/2012
+
+Especificaciones del computador (alba03181):
+	- Procesador:Intel(R) Core(TM) i5 CPU       M 450  @ 2.40GHz
+	- Caché L2: 3072KB
+	- Mem. principal: 4GB
+	- Kernel:  3.2.0-30-generic*/
+
+
+Hemos realizado tres ejecuciones para cada ejercicio y algoritmo, a fin
+de detectar posibles fallos.
+
+Ejercicio 3)
+
+fib1
+
+   |    n    |     t(n)      |
+   |---------|---------------|
+   |       2 |     0.023500  |
+   |       4 |     0.067300  |
+   |       8 |     0.508200  |
+   |      16 |    13.514700  |
+   |      32 | 30030.000000  |
+
+   |       2 |     0.011500  |
+   |       4 |     0.031200  |
+   |       8 |     0.267900  |
+   |      16 |    13.198900  |
+   |      32 | 29730.000000  |
+
+   |       2 |     0.012400  |
+   |       4 |     0.035800  |
+   |       8 |     0.344800  |
+   |      16 |    13.738000  |
+   |      32 | 30954.000000  |
+
+
+fib2
+
+   |    n    |     t(n)      |
+   |---------|---------------|
+   |    1000 |     6.320100  |
+   |   10000 |    60.707000  |
+   |  100000 |   601.000000  |
+   | 1000000 |  6033.000000  |
+   |10000000 | 60583.000000  |
+
+   |    1000 |     6.001500  |
+   |   10000 |    60.433500  |
+   |  100000 |   602.000000  |
+   | 1000000 |  6087.000000  |
+   |10000000 | 60079.000000  |
+
+   |    1000 |     5.976400  |
+   |   10000 |    60.506400  |
+   |  100000 |   605.000000  |
+   | 1000000 |  6018.000000  |
+   |10000000 | 60078.000000  |
+
+
+fib3
+
+   |    n    |     t(n)      |
+   |---------|---------------|
+   |    1000 |     0.082800  |
+   |   10000 |     0.101800  |
+   |  100000 |     0.120700  |
+   | 1000000 |     0.143700  |
+   |10000000 |     0.178100  |
+
+   |    1000 |     0.082500  |
+   |   10000 |     0.101200  |
+   |  100000 |     0.121100  |
+   | 1000000 |     0.143800  |
+   |10000000 |     0.176900  |
+
+   |    1000 |     0.085700  |
+   |   10000 |     0.101300  |
+   |  100000 |     0.121600  |
+   | 1000000 |     0.145100  |
+   |10000000 |     0.179400  |
+
+Conclusiones:
+
+-	Es obvio que el más lento es fib1. Las llamadas recursivas le dan una complejidad
+	grande, situándonos en tiempos del orden de 30000 microsegundo en n = 32. 
+
+-	El algoritmo fib3 se presenta como el más eficiente. En torno a los 0.18 microsegundos
+	es capaz de trabajar con un n de 10M. Además, su crecimiento es bastante lento en comparación
+	a los otros dos algoritmos.
+
+-	Por último, fib2 viene siendo un término medio. Presenta tiempos progresivamente más altos
+	cuanto mayor es n, llegando a tiempos parecidos a los de fib1 en los valores más altos, pero
+	para una cantidad mucho mayor de operaciones. Es destacable el hecho de que hay una relación
+	proporcional y directa entre los tiempos y n.
+
+
+Ejercicio 4)
+Estudio de las cotas para cada algoritmo
+
+Notación:
+	h(n): subestimada
+	g(n): ajustada
+	f(n): sobreestimada
+
+fib1
+			  |  subestimada   |    ajustada    |  sobreestimada |
+   |    n   |     t(n)    |   t(n)/h(n)    |    t(n)/g(n)   |    t(n)/f(n)   |
+   |--------|-------------|----------------|----------------|----------------|
+   |       2|    0.0106000|     0.0087603  |     0.0040488  |     0.0026500  |
+   |       4|    0.0302000|     0.0206270  |     0.0044061  |     0.0018875  |
+   |       8|    0.3054000|     0.1424714  |     0.0065008  |     0.0011930  |
+   |      16|   13.3728000|     2.9103109  |     0.0060593  |     0.0002041  |
+   |      32|32614.0000000|  1544.6786424  |     0.0066958  |     0.0000076  |
+
+   |       2|    0.0106000|     0.0087603  |     0.0040488  |     0.0026500  |
+   |       4|    0.0311000|     0.0212417  |     0.0045374  |     0.0019437  |
+   |       8|    0.2254000|     0.1051508  |     0.0047979  |     0.0008805  |
+   |      16|   13.2262000|     2.8784065  |     0.0059928  |     0.0002018  |
+   |      32|32047.0000000|  1517.8241385  |     0.0065793  |     0.0000075  |
+
+   |       2|    0.0119000|     0.0098347  |     0.0045454  |     0.0029750  |
+   |       4|    0.0302000|     0.0206270  |     0.0044061  |     0.0018875  |
+   |       8|    0.2634000|     0.1228780  |     0.0056068  |     0.0010289  |
+   |      16|   13.7068000|     2.9829990  |     0.0062106  |     0.0002091  |
+   |      32|29711.0000000|  1407.1854770  |     0.0060998  |     0.0000069  |
+
+Análisis: 
+
+-	Lo primero destacable de fib1 es su rapidísimo crecimiento en tiempo.
+	En tan solo 32 repeticiones, se sitúa con un t(32) del orden de 30000 
+	microsegundos. Un crecimiento tipo exponencial.
+
+-	La cota subestimada h(n) tiende a infinito. Su crecimiento es enorme,
+	muy superior al de la función que acota, del orden de una exponencial.
+
+-	La cota ajustada g(n) presenta un crecimiento lento y parece estabilizarse
+	entorno a un valor constante entre 0.006 y 0.007
+
+-	La cota sobreestimada f(n) tiende claramente a 0. Su crecimiento es notablemente
+	inferior al de la función que acota.
+
+
+fib2
+			  |  subestimada   |    ajustada    |  sobreestimada |			
+   |    n   |     t(n)    |   t(n)/h(n)    |    t(n)/g(n)   |    t(n)/f(n)   |
+   |--------|-------------|----------------|----------------|----------------|
+   |    1000|    6.0123000|     0.0239354  |     0.0060123  |     0.0008704  |
+   |   10000|   60.5628000|     0.0382125  |     0.0060563  |     0.0006576  |
+   |  100000|  605.0000000|     0.0605000  |     0.0060500  |     0.0005255  |
+   | 1000000| 6107.0000000|     0.0967894  |     0.0061070  |     0.0004420  |
+   |10000000|59875.0000000|     0.1503992  |     0.0059875  |     0.0003715  |
+
+   |    1000|    6.0016000|     0.0238928  |     0.0060016  |     0.0008688  |
+   |   10000|   60.3425000|     0.0380735  |     0.0060342  |     0.0006552  |
+   |  100000|  602.0000000|     0.0602000  |     0.0060200  |     0.0005229  |
+   | 1000000| 6022.0000000|     0.0954423  |     0.0060220  |     0.0004359  |
+   |10000000|60409.0000000|     0.1517405  |     0.0060409  |     0.0003748  |
+
+   |    1000|    5.9833000|     0.0238199  |     0.0059833  |     0.0008662  |
+   |   10000|   60.2475000|     0.0380136  |     0.0060248  |     0.0006541  |
+   |  100000|  609.0000000|     0.0609000  |     0.0060900  |     0.0005290  |
+   | 1000000| 6018.0000000|     0.0953789  |     0.0060180  |     0.0004356  |
+   |10000000|60446.0000000|     0.1518335  |     0.0060446  |     0.0003750  |
+
+Análisis: 
+
+-	En fib 2 hay una relación casi 1:1 entre n y t(n). Esto es, para cada aumento de
+	diez veces el valor de n, se produce uno aproximadamente similar en t(n). El
+	crecimiento tiene caracter lineal.
+
+-	La cota subestimada h(n) tiende a infinito, aunque con un ritmo de crecimiento
+	muy lento. 
+
+-	La cota ajustada g(n) tiende a un valor constante de 0.006
+
+-	La cota sobreestimada f(n) decrece lentamente hacia 0.
+
+
+fib3
+			  |  subestimada   |    ajustada    |  sobreestimada |
+   |    n   |     t(n)    |   t(n)/h(n)    |    t(n)/g(n)   |    t(n)/f(n)   |
+   |--------|-------------|----------------|----------------|----------------|
+   |    1000|    0.0825000|     0.0313896  |     0.0119431  |     0.0026089  |
+   |   10000|    0.1046000|     0.0344662  |     0.0113568  |     0.0010460  |
+   |  100000|    0.1207000|     0.0355725  |     0.0104839  |     0.0003817  |
+   | 1000000|    0.1438000|     0.0386879  |     0.0104086  |     0.0001438  |
+   |10000000|    0.2154000|     0.0536524  |     0.0133639  |     0.0000681  |
+
+   |    1000|    0.1077000|     0.0409777  |     0.0155912  |     0.0034058  |
+   |   10000|    0.1314000|     0.0432970  |     0.0142666  |     0.0013140  |
+   |  100000|    0.1577000|     0.0464771  |     0.0136976  |     0.0004987  |
+   | 1000000|    0.1726000|     0.0464363  |     0.0124932  |     0.0001726  |
+   |10000000|    0.1693000|     0.0421697  |     0.0105037  |     0.0000535  |
+
+   |    1000|    0.0825000|     0.0313896  |     0.0119431  |     0.0026089  |
+   |   10000|    0.1011000|     0.0333130  |     0.0109768  |     0.0010110  |
+   |  100000|    0.1214000|     0.0357788  |     0.0105447  |     0.0003839  |
+   | 1000000|    0.1437000|     0.0386610  |     0.0104014  |     0.0001437  |
+   |10000000|    0.1706000|     0.0424935  |     0.0105844  |     0.0000539  |
+
+Análisis: 
+
+-	fib3 crece lentamente al inicio. Su pendiente aumenta para valores más altos de n.
+	Es un tipo de crecimiento logarítmico.	
+
+-	La cota subestimada h(n) tiende a infinito, aunque con un crecimiento muy muy lento.
+
+-	La cota ajustada g(n) tiene unos valores muy similares en casi todas las pruebas.
+	De hecho, valores como el registrado para n=1000 en la segunda tabla muestran que
+	cualquier pequeña interferencia puede producir variaciones notables en las mediciones.
+	Podemos establecer una cota constante en algún punto entre 0.010 y 0.011
+
+-	La cota sobreestimada f(n) tiende claramente a 0.
