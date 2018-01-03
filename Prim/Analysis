@@ -1,0 +1,88 @@
+/* Ismael Barbeito Vázquez (i.barbeito)
+	Daniel Ruiz Pérez (d.ruiz.perez) 
+	Algoritmos, curso 2012/2013
+	1/10/2012
+
+Especificaciones del computador:
+	- Procesador:Intel(R) Core(TM) i5 CPU       M 450  @ 2.40GHz
+	- Caché L2: 3072KB
+	- Mem. principal: 4GB
+	- Kernel:  3.2.0-30-generic*/
+
+
+Un grafo es un conjunto de objetos llamados  nodos unidos por caminos llamados aristas,
+que permiten representar información y relaciones. Ramas enteras de la matemática y de
+la informática se encargan del estudio de sus propiedades, de probada utilidad práctica,
+intentando buscar modelos y algoritmos que permitan resolver problemas abstractos luego
+extrapolables a problemáticas de la vida real.
+
+Una de las cuestiones clásicas en teoría de grafos es hallar un árbol de recubrimiento
+mínimo para un grafo dado. Sabiendo que cada camino entre dos nodos tiene un coste (llamado
+peso), y que se considera que es indiferente el sentido entre nodos (camino (a,b) equivalente
+a camino (b,a)), se busca averiguar un posible recorrido que pase por todos los nodos y que, 
+además, tenga el peso mínimo posible. 
+
+Existen diversos algoritmos que dan solución a esta pregunta. En el presente trabajo
+se pretende estudiar el llamado algoritmo de Prim.
+
+
+ALGORITMO DE PRIM
+
+	Se tiene grafo de N nodos y A aristas. El algoritmo propuesto por Prim consiste
+	en crear un conjunto de nodos B que tendrá, de inicio, un nodo escogido de forma
+	arbitraria del conjunto N. Se buscan las aristas de pesos mínimos que enlacen algún
+	nodo de B con algún nodo que no esté en B y si en N. Al encontrarla, ese nodo se añade
+	a B, de tal manera que al acabar tendremos en B los nodos de N, y seleccionadas
+	N-1 aristas, que conformarán el árbol de recubrimiento mínimo.
+	
+	En la implementación que hemos usado para hacer la representación de los grafos
+	utilizamos matrices de adyacencia. En esta representacion, el camino entre los nodos
+	a y b se indica en la celda M[a,b] de la matriz. Hay dos valores especiales: 0 (si a y b
+	son iguales) e infinito (representado por INT_MAX, para dos nodos sin camino que los una).
+	
+	Además, tomamos las siguientes consideraciones:
+	
+	- Todos los tiempos que se presentan en las tablas a continuación están medidos
+	en microsegundos en la máquina cuyas características técnicas se muestran en la
+	parte superior de este informe.
+	
+	- La entrada se realiza para diferentes número de nodos (n), estudiando en cada caso
+	cuánto tiempo tarda en obtener el árbol de recubrimiento mínimo. Se evaluará, así mismo,
+	las llamadas funciones cotas para tratar de obtener una complejidad computacional para este
+	algoritmo.
+
+	- En aquellos casos en los que el tiempo medido sea inferior a 500 microsegundos,
+	realizaremos un promedio de 10000 medidas con el tamaño de entrada correspondiente
+	para tratar de obtener una medida más precisa, remarcando dicho dato con un asterisco.
+	
+	- Somos conscientes de que nuestro código sufre importantes leaks de memoria si se da el caso
+	anterior. Sin embargo, al no tener forma de computar el tiempo de esas 10000 medidas, hemos preferido
+	sacrificar esa memoria en pos de una mejor precisión midiendo tiempos.
+
+	Con estas premisas, obtenemos la siguiente tabla de tiempos:
+
+		h(n) = subestimada = pow(n,1.93);
+		g(n) = ajustada = pow(n,2.065);
+		f(n) = sobreestimada = pow(n,2.5);
+
+			                  | subestimada |  ajustada   |sobreestimada|
+	  |    n    |    t(n)   |  t(n)/h(n)  |  t(n)/g(n)  |  t(n)/f(n)  |
+	  |---------|-----------|-------------|-------------|-------------|
+	  | *   128 |    209.24 |    0.017936 |    0.009317 |    0.001129 |
+	  |     256 |    874.00 |    0.019661 |    0.009300 |    0.000834 |
+	  |     512 |   3584.00 |    0.021158 |    0.009114 |    0.000604 |
+	  |    1024 |  27820.00 |    0.043100 |    0.016908 |    0.000829 |
+	  |    2048 | 129287.00 |    0.052564 |    0.018778 |    0.000681 |
+	  |    4096 | 551767.00 |    0.058871 |    0.019153 |    0.000514 |
+	  |    8192 |2311672.00 |    0.064727 |    0.019177 |    0.000381 |
+
+	
+	Las cotas presentan las tendencias deseadas (subestimada a infinito,
+	ajustada a una constante 0.192 y sobreestimada a 0), dándonos la idea
+	de una posible complejidad exponenical (O(n^2)). Esto se debe a que se hace
+	un recorrido sobre todos los nodos para comprobar si se debe actualizar su
+	distancia mínima, y esta operación se hace n veces. Se podrían mejorar estos
+	tiempos usando un montículo de mínimos para obtener la distancia mínima de forma
+	eficiente.
+
+
