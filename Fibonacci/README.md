@@ -1,8 +1,8 @@
-Fibonacci implementations running time empyrical study
+Fibonacci implementations running time empirical study
 ============
 
 
-This is an empyrical study of the running time of different Fibonacci implenentations that I developed for the Algorithms course in my sophomore year of my BS in computer science at UDC (Spain). Implemented are the naive recursive version (fib1), the iterative version (fib2) and a more efficient version (fib3)
+This is an empirical study of the running time of different Fibonacci implementations that I developed for the Algorithms course in my sophomore year of my BS in computer science at UDC (Spain). Implemented are the naive recursive version (fib1), the iterative version (fib2) and a more efficient version (fib3)
 
 
 
@@ -12,7 +12,7 @@ This is an empyrical study of the running time of different Fibonacci implenenta
 
 
 
-For every version, we checked the running times of an upper bound (sobreestimada), a lower bound (subestimada) and a tight bound (ajustada) as n grows. This table is one of the cases, where  t(n)/h(n) tends to infinity, t(n)/g(n) to a constant and t(n)/f(n) to 0 correspondingly.
+For every version, we checked the running times of an upper bound , a lower bound and a tight bound as n grows. This table is one of the cases, where  t(n)/h(n) tends to infinity, t(n)/g(n) to a constant and t(n)/f(n) to 0 correspondingly.
 
 
    |    n   |     t(n)    |   t(n)/h(n)    |    t(n)/g(n)   |    t(n)/f(n)   |
