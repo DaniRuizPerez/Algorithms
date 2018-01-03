@@ -10,7 +10,7 @@ This is an empirical study of the running time of different Maximum Subarray imp
 </p>
 
 
-For every version, we checked the running times of an upper bound , a lower bound and a tight bound as n grows. This table is one of the cases, where  t(n)/h(n) tends to infinity, t(n)/g(n) to a constant and t(n)/f(n) to 0 correspondingly.
+For every version, we checked the running times of an upper bound, a lower bound and a tight bound as n grows. This table is one of the cases, where  t(n)/h(n) tends to infinity, t(n)/g(n) to a constant and t(n)/f(n) to 0 correspondingly.
 
 h(n) = pow(n,1.8)
 g(n) = pow (n,2)
