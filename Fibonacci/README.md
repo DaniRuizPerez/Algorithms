@@ -7,7 +7,7 @@ This is an empyrical study of the running time of different Fibonacci implenenta
 
 
 <p align="center">
-<img src="https://github.com/DaniRuizPerez/Algorithms/blob/master/Fibonacci/alg.png" width="500">
+<img src="https://github.com/DaniRuizPerez/Algorithms/blob/master/Fibonacci/alg.PNG" width="500">
 </p>
 
 
