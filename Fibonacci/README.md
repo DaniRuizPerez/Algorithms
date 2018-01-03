@@ -24,7 +24,7 @@ For every version, we checked the running times of an upper bound (sobreestimada
    |10000000|60409.0000000|     0.1517405  |     0.0060409  |     0.0003748  |
 
    
-More details can be seen in the file [Analysis](https://github.com/DaniRuizPerez/Algorithms/blob/master/FIbonacci/Analysis).
+More details can be seen in the file [Analysis](https://github.com/DaniRuizPerez/Algorithms/blob/master/Fibonacci/Analysis).
 
 ## Contact
 
