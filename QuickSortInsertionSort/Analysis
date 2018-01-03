@@ -1,0 +1,400 @@
+/* Ismael Barbeito Vázquez (i.barbeito)
+	Daniel Ruiz Pérez (d.ruiz.perez) 
+	Algoritmos, curso 2012/2013
+	19/11/2012
+
+Especificaciones del computador (alba03181):
+	- Procesador:Intel(R) Core(TM) i5 CPU       M 450  @ 2.40GHz
+	- Caché L2: 3072KB
+	- Mem. principal: 4GB
+	- Kernel:  3.2.0-30-generic*/
+
+Uno de los problemas clásicos de la informática es el de los llamados algoritmos
+de ordenación. Uno de sus planteamientos se basa en buscar la forma más rápida
+y eficiente para ordenar un vector, partiendo de la base de que sus elementos pueden
+tener cualquier disposición. En esta práctica se busca analizar la complejidad de dos
+de ellos, inserción y quicksort.
+
+1) INSERCION
+
+	Entre los primeros algoritmos de esta clase se encuentra inserción. La idea de 
+	inserción se basa en hacer recorridos sucesivos al array, tomando de cada vez un
+	elemento menos de la parte izquierda, que se considera ordenada. En la parte derecha
+	se buscará el siguiente elemento en función del orden y se insertará en su posición
+	en la zona ordenada.
+
+	Tras realizar la implementación propuesta del algoritmo, hemos realizado una serie
+	de comprobaciones empíricas, teniendo en cuenta las siguientes consideraciones:
+
+	- Hemos tomado diferentes tamaños de entrada (n, o número de elementos en el array)
+	para observar el crecimiento de la función tiempo (t) en relación a dicho parámetro.
+
+	- También hemos considerado diferentes ordenaciones para el estado incial: 
+	dispuestos de forma aleatoria, con orden ascendente y con orden descendente. 
+
+	- Consideramos que el vector está ordenado cuando presenta un orden ascendente.
+
+	- En aquellos casos en los que el tiempo medido sea inferior a 500 microsegundos,
+	realizaremos un promedio de 10000 medidas con el tamaño de entrada correspondiente
+	para tratar de obtener una medida más precisa, remarcando dicho dato con un asterisco.
+
+	Así mismo, cabe remarcar que todos los tiempos mostrados están medidos en 
+	microsegundos sobre la máquina cuyas especificaciones mostramos en la parte 
+	superior de este informe. Se han realizado varias mediciones para intentar obtener
+	una en la cual el ruido del sistema no afecte excesivamente al resultado.
+
+	Con estas premisas, obtenemos la siguiente tabla de tiempos:
+
+
+	  |    n    |  ALEATORIO | ASCENDENTE  | DESCENDENTE |
+	  |---------|------------|-------------|-------------|
+	  |     256 |     88.96* |       2.00* |     168.81* | 
+	  |     512 |    339.45* |       4.01* |     647.00  | 
+	  |    1024 |   1494.00  |       8.39* |    2582.00  | 
+	  |    2048 |   5418.00  |      16.94* |   10457.00  | 
+	  |    4096 |  23089.00  |      32.30* |   42801.00  | 
+	  |    8192 |  86012.00  |      64.22* |  172261.00  | 
+
+	Inserción presenta sus mejores tiempos cuando el vector presenta ordenación
+	ascendente. Esto es debido a que lo único que hace es simplemente comprobar
+	que cada elemento sea menor que el siguiente. Por la contra, cuando el vector
+	se encuentra inversamente ordenado, el trabajo de desplazar todos los elementos
+	para llevar el primero sistemáticamente a la primera posición nos hace hallarnos
+	en el peor caso posible. Con incializaciones aleatorias del vector nos encontramos
+	en el caso medio, aunque, a priori, parece estar más cercano al peor que al mejor
+	caso.
+
+	El siguiente paso del estudio de la complejidad de este algoritmo pasa por calcular
+	las llamadas funciones cota. Se ha realizado un estudio para cada una de las ordenaciones
+	que se consideran de partida. A cotninuación se muestran las mejores mediciones obtenidas
+	para cada caso, con sus funciones correspondientes:
+
+
+	    subestimada = pow(n,1.7)
+	    ajustada = pow(n,2)
+	    sobreestimada = pow(n,2.2)
+
+
+	           Aleatorio
+	                        | subestimada |  ajustada   |sobreestimada|
+	  |    n    |    t(n)   |  t(n)/h(n)  |  t(n)/g(n)  |  t(n)/f(n)  |
+	  |---------|-----------|-------------|-------------|-------------|
+	  | *     8 |      0.48 |    0.013850 |    0.007422 |    0.004897 |
+	  | *    16 |      0.72 |    0.006485 |    0.002823 |    0.001621 |
+	  | *    32 |      1.86 |    0.005151 |    0.001821 |    0.000911 |
+	  | *    64 |      6.30 |    0.005354 |    0.001538 |    0.000669 |
+	  | *   128 |     22.84 |    0.005977 |    0.001394 |    0.000528 |
+	  | *   256 |     85.85 |    0.006914 |    0.001310 |    0.000432 |
+	  | *   512 |    332.31 |    0.008237 |    0.001268 |    0.000364 |
+	  |    1024 |   1313.00 |    0.010017 |    0.001252 |    0.000313 |
+	  |    2048 |   5273.00 |    0.012382 |    0.001257 |    0.000274 |
+
+
+
+	    subestimada = pow(n,0.7)
+	    ajustada = n
+	    sobreestimada = pow(n,1.2)
+	 
+
+	           Ascendente
+	                        | subestimada |  ajustada   |sobreestimada|
+	  |    n    |    t(n)   |  t(n)/h(n)  |  t(n)/g(n)  |  t(n)/f(n)  |
+	  |---------|-----------|-------------|-------------|-------------|
+	  | *  1024 |      8.50 |    0.066444 |    0.008305 |    0.002076 |
+	  | *  2048 |     16.73 |    0.080467 |    0.008170 |    0.001778 |
+	  | *  4096 |     32.86 |    0.097270 |    0.008022 |    0.001520 |
+	  | *  8192 |     66.17 |    0.120584 |    0.008077 |    0.001332 |
+	  | * 16384 |    131.35 |    0.147348 |    0.008017 |    0.001151 |
+	  | * 32768 |    267.42 |    0.184665 |    0.008161 |    0.001020 |
+	  |   65536 |    503.00 |    0.213812 |    0.007675 |    0.000835 |
+
+
+
+	    subestimada = pow(n,1.6)
+	    ajustada = pow(n,2)
+	    sobreestimada = pow(n,2.3)
+
+	           Descendente
+	                        | subestimada |  ajustada   |sobreestimada|
+	  |    n    |    t(n)   |  t(n)/h(n)  |  t(n)/g(n)  |  t(n)/f(n)  |
+	  |---------|-----------|-------------|-------------|-------------|
+	  | *     8 |      0.24 |    0.008479 |    0.003691 |    0.001978 |
+	  | *    16 |      0.92 |    0.010908 |    0.003598 |    0.001566 |
+	  | *    32 |      3.23 |    0.012604 |    0.003151 |    0.001114 |
+	  | *    64 |     12.00 |    0.015469 |    0.002931 |    0.000842 |
+	  | *   128 |     43.28 |    0.018399 |    0.002642 |    0.000616 |
+	  | *   256 |    171.94 |    0.024110 |    0.002624 |    0.000497 |
+	  |     512 |    647.00 |    0.029928 |    0.002468 |    0.000380 |
+	  |    1024 |   2614.00 |    0.039886 |    0.002493 |    0.000312 |
+	  |    2048 |  10481.00 |    0.052756 |    0.002499 |    0.000254 |
+
+
+	Los resultados obtenidos son una complejidad de aproximadamente n
+	para el mejor caso y de n^2 para los otros dos casos. Estos resultados
+	eran esperables, ya que si el vector se encuentra ordenado de forma
+	ascendente inserción hará comparaciones proporcionales al tamaño de entrada,
+	lo cual presenta complejidad lineal, mientras que en el peor caso tendrá
+	que hacer un trabajo cuadrático para llevar el elemento a la primera posición
+	(desplazar todos los anteriores sistemáticamente). Así mismo, los tiempos
+	del caso medio se hallaban, como se veía antes, más próximos al peor que al
+	mejor caso.
+
+	De todos modos, es importante remarcar que inserción funciona muy bien en tamaños
+	pequeños de vectores, lo cual es realmente útil en otros algoritmos de ordenación,
+	como el siguiente a estudiar: Quicksort.
+
+2) QUICKSORT
+	
+	El algoritmo recursivo quicksort tiene como base el buscar un representante (pivote)
+	que permitirá dividir el vector en dos subvectores diferentes: uno formado por aquellos
+	elementos menores que el pivote y otro formado por aquellos que sean mayores. El vector
+	ordenado estará compuesto, pues, por el vector resultante de aplicar quicksort al de menores,
+	el pivote, y el resultante de aplicar quicksort al de mayores.
+
+	La elección del pivote es fundamental para el correcto funcionamiento del algoritmo. La
+	estrategia usada en esta práctica se llama "Mediana 3", y consiste en obtener el primer,
+	el último y el elemento central del vector, para despues usar como pivote la mediana de
+	esos tres.
+
+	La versión implementada de quicksort incluye, además, una mejora: se fijara un valor, al que
+	denominamos umbral. Todas aquellas llamadas recursivas que se hagan sobre vectores cuya
+	longitud se sitúe bajo umbral se convertirán en llamadas a inserción. Esto añade un nuevo problema 
+	al estudio de la complejidad, ya que se deberá hallar un valor de umbral adecuado para que las 
+	llamadas a inserción mejoren la complejidad temporal. Así pues, a las precondiciones de inserción,
+	que usaremos aquí también, hay que añadir que consideramos tres valores de umbral: 1, 10 y 100.
+
+
+	       UMBRAL = 1
+	  |    n    |  ALEATORIO | ASCENDENTE  | DESCENDENTE |
+	  |---------|------------|-------------|-------------|
+	  |     256 |     30.77* |      12.47* |      12.94* | 
+	  |     512 |     64.35* |      24.91* |      26.71* | 
+	  |    1024 |    135.64* |      51.87* |      56.70* | 
+	  |    2048 |    271.93* |     107.55* |     118.99* | 
+	  |    4096 |    557.00  |     224.10* |     239.33* | 
+	  |    8192 |   1152.00  |     469.80* |     504.88* | 
+
+
+
+	       UMBRAL = 10
+	  |    n    |  ALEATORIO | ASCENDENTE  | DESCENDENTE |
+	  |---------|------------|-------------|-------------|
+	  |     256 |     23.16* |       8.07* |       9.05* | 
+	  |     512 |     52.59* |      16.05* |      18.07* | 
+	  |    1024 |    115.32* |      36.69* |      44.37* | 
+	  |    2048 |    256.08* |      74.19* |      81.95* | 
+	  |    4096 |    474.76* |     156.92* |     171.91* | 
+	  |    8192 |    970.00  |     334.23* |     370.10* | 
+
+
+	       UMBRAL = 100
+	  |    n    |  ALEATORIO | ASCENDENTE  | DESCENDENTE |
+	  |---------|------------|-------------|-------------|
+	  |     256 |     32.86* |       3.42* |       4.36* | 
+	  |     512 |     71.11* |       8.14* |      10.38* | 
+	  |    1024 |    145.30* |      19.52* |      22.46* | 
+	  |    2048 |    302.62* |      43.04* |      51.28* | 
+	  |    4096 |    591.00  |      94.40* |     111.71* | 
+	  |    8192 |   1162.00  |     209.62* |     241.56* | 
+
+
+
+	Observamos lo siguiente:
+
+	- Con umbral 1, se presentan los peores tiempos medidos para ascendente y descendente. 
+	Sin embargo, en aleatorio anda próximo a otros casos medidos.
+
+	- Con umbral 10 se presentan los mejores tiempos para aleatorio.
+
+	- Con umbral 100 se obtienen los peores tiempos para aleatorio y los mejores
+	para ascendente y descendente.
+
+	¿Cómo se explica este comportamiento? Hay que tener presente que,
+	como quicksort usa en esta implementación Mediana 3, se encontrará en su 
+	mejor caso cuando, sistemáticamente, el pivote coincida con la mediana. 
+	Cuando presenta ordenación de partida aleatoria este caso es improbable.
+	Sin embargo, en las otras dos ordenaciones siempre se hallará en ese caso.
+	Eso explica, grosso modo, el por qué de los tiempos menores en descendente
+	y ascendente.
+
+	Estudiando por casos, con umbral 1 las llamadas recursivas se producen 
+	hasta las últimas consecuencias, dejando el vector completamente ordenado 
+	sin tener que recurrir a inserción. Inserción es más eficiente que quicksort
+	en vectores semiordenados y pequeños, por lo cual se obtienen, de forma
+	global, los peores tiempos.
+
+	En caso 10 se presentan, como ya dijimos, los mejores tiempos para aleatorio.
+	Esto se debe a que el vector con el que trabaja inserción está estructurado
+	en trozos de 10 elementos semiordenados. Los tiempos de ascendente y descendente
+	son mejores que en el caso anterior por la eficiencia de inserción para
+	estos casos. El comportamiento de ascendente parece razonable, ya que es
+	el esperado para inserción en ese caso. Sin embargo, ¿por qué descendente
+	presenta tiempos tan solo ligeramente mayores a los de ascendente, si 
+	es el peor caso de inserción? Es debido a que, al tener el pivote igual a 
+	la mediana, los intercambios de la primera iteración de quicksort dejan
+	las dos partes en que divide al vector completamente ordenadas. El único
+	trabajo adicional que realiza en relación a ascendente es los intercambios
+	extra en la primera vuelta.
+
+	En caso 100, para aleatorio, los subvectores son de 100 elementos. Inserción
+	tiene que realizar más trabajo ya que, en proporción con el caso anterior,
+	estos vectores estarán menos ordenados. En cambio, como ascendente y descendente
+	devuelven el vector ya ordenado, inserción se encuentra en su mejor caso,
+	y hay menos carga de trabajo para quicksort. 
+
+	Conclusión: con la implementación escogida, aleatorio presesenta mejores tiempos
+	en valores pequeños de umbral y ascendente y descendente al contrario.
+
+	Lo siguiente es, pues, calcular cotas para quicksort, teniendo en cuenta cada
+	ordenación y cada valor posible del umbral. Consideramos las cotas subestimada
+	y sobreestimada similares en los nueve casos, con valores de, respectivamente,
+	n y n^1.5.
+
+	UMBRAL 1: 
+
+
+		  ajustada = log (n) * pow(n,0.945)
+
+		           Aleatorio
+		                        | subestimada |  ajustada   |sobreestimada|
+		  |    n    |    t(n)   |  t(n)/h(n)  |  t(n)/g(n)  |  t(n)/f(n)  |
+		  |---------|-----------|-------------|-------------|-------------|
+		  | *   256 |     25.50 |    0.099600 |    0.024367 |    0.006225 |
+		  | *   512 |     56.37 |    0.110093 |    0.024871 |    0.004865 |
+		  | *  1024 |    118.71 |    0.115933 |    0.024488 |    0.003623 |
+		  | *  2048 |    248.56 |    0.121369 |    0.024211 |    0.002682 |
+		  |    4096 |    511.00 |    0.124756 |    0.023699 |    0.001949 |
+		  |    8192 |   1055.00 |    0.128784 |    0.023460 |    0.001423 |
+
+    
+
+		  ajustada = log (n) * pow(n,0.935)
+
+		           Ascendente
+		                        | subestimada |  ajustada   |sobreestimada|
+		  |    n    |    t(n)   |  t(n)/h(n)  |  t(n)/g(n)  |  t(n)/f(n)  |
+		  |---------|-----------|-------------|-------------|-------------|
+		  | *   256 |     11.82 |    0.046156 |    0.011936 |    0.002885 |
+		  | *   512 |     25.25 |    0.049322 |    0.011860 |    0.002180 |
+		  | *  1024 |     52.88 |    0.051642 |    0.011691 |    0.001614 |
+		  | *  2048 |    110.78 |    0.054091 |    0.011645 |    0.001195 |
+		  | *  4096 |    230.89 |    0.056370 |    0.011637 |    0.000881 |
+		  | *  8192 |    479.04 |    0.058477 |    0.011657 |    0.000646 |
+
+
+
+    
+		   ajustada = log (n) * pow(n,0.935)
+
+		           Descendente
+		                        | subestimada |  ajustada   |sobreestimada|
+		  |    n    |    t(n)   |  t(n)/h(n)  |  t(n)/g(n)  |  t(n)/f(n)  |
+		  |---------|-----------|-------------|-------------|-------------|
+		  | *   256 |     12.87 |    0.050277 |    0.013001 |    0.003142 |
+		  | *   512 |     26.67 |    0.052084 |    0.012524 |    0.002302 |
+		  | *  1024 |     56.50 |    0.055171 |    0.012490 |    0.001724 |
+		  | *  2048 |    117.81 |    0.057526 |    0.012385 |    0.001271 |
+		  | *  4096 |    245.61 |    0.059963 |    0.012379 |    0.000937 |
+		  |    8192 |    502.00 |    0.061279 |    0.012216 |    0.000677 |
+
+
+	UMBRAL 10: 
+
+
+		  ajustada = log (n) * pow(n,0.941)
+		 
+		           Aleatorio
+		                        | subestimada |  ajustada   |sobreestimada|
+		  |    n    |    t(n)   |  t(n)/h(n)  |  t(n)/g(n)  |  t(n)/f(n)  |
+		  |---------|-----------|-------------|-------------|-------------|
+		  | *   256 |     22.86 |    0.089312 |    0.022340 |    0.005582 |
+		  | *   512 |     50.26 |    0.098172 |    0.022739 |    0.004339 |
+		  | *  1024 |    108.07 |    0.105534 |    0.022918 |    0.003298 |
+		  | *  2048 |    227.48 |    0.111072 |    0.022843 |    0.002454 |
+		  | *  4096 |    473.03 |    0.115485 |    0.022680 |    0.001804 |
+		  |    8192 |    970.00 |    0.118408 |    0.022362 |    0.001308 |
+
+
+
+
+		  ajustada = log (n) * pow(n,0.985)
+
+		           Ascendente
+		                        | subestimada |  ajustada   |sobreestimada|
+		  |    n    |    t(n)   |  t(n)/h(n)  |  t(n)/g(n)  |  t(n)/f(n)  |
+		  |---------|-----------|-------------|-------------|-------------|
+		  | *   256 |      7.61 |    0.029722 |    0.005825 |    0.001858 |
+		  | *   512 |     16.11 |    0.031472 |    0.005540 |    0.001391 |
+		  | *  1024 |     34.83 |    0.034012 |    0.005445 |    0.001063 |
+		  | *  2048 |     74.22 |    0.036242 |    0.005329 |    0.000801 |
+		  | *  4096 |    158.84 |    0.038780 |    0.005282 |    0.000606 |
+		  | *  8192 |    334.92 |    0.040884 |    0.005194 |    0.000452 |
+
+  
+
+		  ajustada = log (n) * pow(n,0.975)    
+
+		           Descendente
+		                        | subestimada |  ajustada   |sobreestimada|
+		  |    n    |    t(n)   |  t(n)/h(n)  |  t(n)/g(n)  |  t(n)/f(n)  |
+		  |---------|-----------|-------------|-------------|-------------|
+		  | *   256 |      8.18 |    0.031942 |    0.006617 |    0.001996 |
+		  | *   512 |     18.15 |    0.035441 |    0.006640 |    0.001566 |
+		  | *  1024 |     38.06 |    0.037166 |    0.006376 |    0.001161 |
+		  | *  2048 |     80.82 |    0.039462 |    0.006262 |    0.000872 |
+		  | *  4096 |    171.73 |    0.041926 |    0.006206 |    0.000655 |
+		  | *  8192 |    363.51 |    0.044374 |    0.006169 |    0.000490 |
+
+
+
+	UMBRAL 100: 
+
+
+		  ajustada = log (n) * pow(n,0.89)
+
+		           Aleatorio
+		                        | subestimada |  ajustada   |sobreestimada|
+		  |    n    |    t(n)   |  t(n)/h(n)  |  t(n)/g(n)  |  t(n)/f(n)  |
+		  |---------|-----------|-------------|-------------|-------------|
+		  | *   256 |     35.79 |    0.137290 |    0.046394 |    0.008737 |
+		  | *   512 |     73.35 |    0.143262 |    0.045612 |    0.006331 |
+		  | *  1024 |    149.76 |    0.145059 |    0.045228 |    0.004570 |
+		  | *  2048 |    307.34 |    0.149166 |    0.045533 |    0.003316 |
+		  |    4096 |    605.00 |    0.147949 |    0.044335 |    0.002308 |
+		  |    8192 |   1160.00 |    0.155640 |    0.042342 |    0.001564 |
+
+
+
+		  ajustada = log (n)* pow(n,1.04)
+		 
+		           Aleatorio
+		                        | subestimada |  ajustada   |sobreestimada|
+		  |    n    |    t(n)   |  t(n)/h(n)  |  t(n)/g(n)  |  t(n)/f(n)  |
+		  |---------|-----------|-------------|-------------|-------------|
+		  | *   256 |     32.84 |    0.128265 |    0.018529 |    0.008017 |
+		  | *   512 |     69.37 |    0.135497 |    0.016924 |    0.005988 |
+		  | *  1024 |    145.67 |    0.142260 |    0.015554 |    0.004446 |
+		  | *  2048 |    305.06 |    0.148957 |    0.014401 |    0.003292 |
+		  |    4096 |    601.00 |    0.146729 |    0.012648 |    0.002293 |
+		  |    8192 |   1142.00 |    0.139404 |    0.010789 |    0.001540 |
+
+
+
+
+		  ajustada = log (n)* pow(n,1.035)
+
+		           Descendente
+		                        | subestimada |  ajustada   |sobreestimada|
+		  |    n    |    t(n)   |  t(n)/h(n)  |  t(n)/g(n)  |  t(n)/f(n)  |
+		  |---------|-----------|-------------|-------------|-------------|
+		  | *   256 |      4.69 |    0.018321 |    0.002721 |    0.001145 |
+		  | *   512 |     10.21 |    0.019933 |    0.002569 |    0.000881 |
+		  | *  1024 |     23.21 |    0.022663 |    0.002565 |    0.000708 |
+		  | *  2048 |     51.24 |    0.025021 |    0.002513 |    0.000553 |
+		  | *  4096 |    112.55 |    0.027479 |    0.002469 |    0.000429 |
+		  | *  8192 |    245.55 |    0.029975 |    0.002427 |    0.000331 |
+
+
+		  Como promedio, observamos que la cota ajustada parece andar cercana
+		  al valor log (n) * n, y que, para cualquiera de los casos, las cotas
+		  subestimada (n) y sobreestimada (n^1.5) son adecuadas. 
