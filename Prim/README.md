@@ -31,7 +31,7 @@ f(n) = pow(n,2.5);
 
 
 
-More details can be seen in the file [Analysis](https://github.com/DaniRuizPerez/Algorithms/blob/master/QuickSortInsertionSort/Analysis).
+More details can be seen in the file [Analysis](https://github.com/DaniRuizPerez/Algorithms/blob/master/Prim/Analysis).
 
 ## Contact
 
