@@ -1,0 +1,188 @@
+/* Ismael Barbeito Vázquez (i.barbeito)
+	Daniel Ruiz Pérez (d.ruiz.perez) 
+	Algoritmos, curso 2012/2013
+	1/10/2012
+
+Especificaciones del computador (alba03181):
+	- Procesador:Intel(R) Core(TM) i5 CPU       M 450  @ 2.40GHz
+	- Caché L2: 3072KB
+	- Mem. principal: 4GB
+	- Kernel:  3.2.0-30-generic*/
+
+
+EJERCICIO 1 : 
+
+	Implementamos los algoritmos en C (Están en el código de la práctica)
+
+
+EJERCICIO 2: 
+
+	Validamos los algoritmos. Realizamos las pruebas pedidas y a mallores otras
+   para estar totalmente seguros de que funcionan a la prefección.
+
+	Vector = -10 10 -10 10 -10
+	Algoritmo1 : 10
+	Algoritmo2: 10
+
+
+	Vector = 0 0 0 0 0
+	Algoritmo1 : 0
+	Algoritmo2: 0
+
+
+	Vector = -9 2 -5 -4 6
+	Algoritmo1 : 6
+	Algoritmo2: 6
+
+
+	Vector = 4 0 9 2 5
+	Algoritmo1 : 20
+	Algoritmo2: 20
+
+
+	Vector = -2 -1 -9 -7 -1
+	Algoritmo1 : 0
+	Algoritmo2: 0
+
+
+	Vector = 9 -2 1 -7 -8
+	Algoritmo1 : 9
+	Algoritmo2: 9
+
+
+	Vector = 15 -2 -5 -4 16
+	Algoritmo1 : 20
+	Algoritmo2: 20
+
+
+	Vector = 7 -5 6 7 -7
+	Algoritmo1 : 15
+	Algoritmo2: 15
+
+
+EJERCIOCIO 3:
+
+	Nota: realizamos tres veces la ejecución de las tablas a fin de detectar posibles fallos y 
+	porque siempre hay algo de ruido que interfiere con el procesador, pudiendo dar algunos valores
+	inválidos.
+
+	sumaSubMax1:
+	
+		Las tablas obtenidas del algoritmo sumaSubMax1 han sido las siguientes:
+
+
+		                   SUMASUBMAX 1
+
+		 subestimada = pow(n,1.8)
+		 ajustada = pow (n,2)
+		 sobreestimada = pow(n,2.2)
+
+		                     | subestimada |  ajustada   |sobreestimada|
+	  |    n    |    t(n)   |  t(n)/h(n)  |  t(n)/g(n)  |  t(n)/f(n)  |
+	  |---------|-----------|-------------|-------------|-------------|
+	  |     500 |   1361.00 |    0.065389 |    0.005444 |    0.001571 |
+	  |    1000 |   5439.00 |    0.086202 |    0.005439 |    0.001366 |
+	  |    2000 |  10693.00 |    0.055905 |    0.002673 |    0.000585 |
+	  |    4000 |  38106.00 |    0.065720 |    0.002382 |    0.000453 |
+	  |    8000 | 152505.00 |    0.086764 |    0.002383 |    0.000395 |
+	  |   16000 | 606014.00 |    0.113734 |    0.002367 |    0.000342 |
+	  |   32000 |2430785.00 |    0.150490 |    0.002374 |    0.000298 |
+
+	  |     500 |    634.00 |    0.030461 |    0.002536 |    0.000732 |
+	  |    1000 |   2374.00 |    0.037625 |    0.002374 |    0.000596 |
+	  |    2000 |   9512.00 |    0.049731 |    0.002378 |    0.000520 |
+	  |    4000 |  40209.00 |    0.069347 |    0.002513 |    0.000478 |
+	  |    8000 | 155163.00 |    0.088276 |    0.002424 |    0.000402 |
+	  |   16000 | 607423.00 |    0.113999 |    0.002373 |    0.000342 |
+	  |   32000 |2416579.00 |    0.149610 |    0.002360 |    0.000296 |
+
+	  |     500 |    596.00 |    0.028635 |    0.002384 |    0.000688 |
+	  |    1000 |   2369.00 |    0.037546 |    0.002369 |    0.000595 |
+	  |    2000 |   9447.00 |    0.049391 |    0.002362 |    0.000516 |
+	  |    4000 |  37798.00 |    0.065189 |    0.002362 |    0.000450 |
+	  |    8000 | 154337.00 |    0.087806 |    0.002412 |    0.000400 |
+	  |   16000 | 606428.00 |    0.113812 |    0.002369 |    0.000342 |
+	  |   32000 |2418567.00 |    0.149733 |    0.002362 |    0.000297 |
+
+
+	Breve comentario:
+
+		Como podemos observar en estas tablas, la primera ejecución del conjunto de 
+		valores del algoritmo tarda mucho más que las demás. Esto es debido a que 
+		después de las primeras ejecuciones tiene los datos en la caché, mucho más 
+		rápida que la memoria, por eso desechamos estos valores.
+	
+		El tiempo de ejecución del algorimo se sitúa entre sus cotas subestimada y 
+		sobreestimada, siendo éstas respectivamente n^1.8 y n^2.2 
+	
+		Observamos que la cota ajustada realmente se ajusta al algoritmo, presentando 
+		éste un crecimiento cuadrático ( O(n^2) ). La constante a la que tiende la 
+		función t(n)/g(n) se sitúa en torno a 0.0023, mientras que t(n)/h(n) y 
+		t(n)/f(n)  tienden respectivamente a infinito y 0, como cabría esperar.
+
+
+
+	sumaSubMax2:
+	
+		Las tablas obtenidas del algoritmo sumaSubMax2 han sido las siguientes:
+
+
+				                SUMASUBMAX 2
+
+		 subestimada= log(n)*pow(n,0.8)
+		 ajustada = pow(n,0.98)*log(n)
+		 sobreestimada = pow(n,1.18)
+
+		                     | subestimada |  ajustada   |sobreestimada|
+	  |    n    |    t(n)   |  t(n)/h(n)  |  t(n)/g(n)  |  t(n)/f(n)  |
+	  |---------|-----------|-------------|-------------|-------------|
+	  | *  4000 |    487.37 |    0.077169 |    0.017341 |    0.027380 |
+	  |    8000 |   1001.00 |    0.084011 |    0.016664 |    0.024819 |
+	  |   16000 |   2085.00 |    0.093308 |    0.016337 |    0.022816 |
+	  |   32000 |   4314.00 |    0.103475 |    0.015992 |    0.020835 |
+	  |   64000 |   9082.00 |    0.117279 |    0.016000 |    0.019359 |
+	  |  128000 |  18711.00 |    0.130596 |    0.015726 |    0.017603 |
+	  |  256000 |  39181.00 |    0.148324 |    0.015766 |    0.016269 |
+
+	  | *  4000 |    486.57 |    0.077042 |    0.017312 |    0.027334 |
+	  |    8000 |   1001.00 |    0.084011 |    0.016664 |    0.024819 |
+	  |   16000 |   2135.00 |    0.095546 |    0.016729 |    0.023363 |
+	  |   32000 |   4400.00 |    0.105538 |    0.016311 |    0.021251 |
+	  |   64000 |   9117.00 |    0.117731 |    0.016061 |    0.019434 |
+	  |  128000 |  18708.00 |    0.130575 |    0.015724 |    0.017600 |
+	  |  256000 |  38816.00 |    0.146942 |    0.015619 |    0.016117 |
+
+	  |    4000 |    507.00 |    0.080277 |    0.018039 |    0.028482 |
+	  |    8000 |   1231.00 |    0.103315 |    0.020493 |    0.030522 |
+	  |   16000 |   2285.00 |    0.102259 |    0.017904 |    0.025005 |
+	  |   32000 |   4344.00 |    0.104195 |    0.016103 |    0.020980 |
+	  |   64000 |   9081.00 |    0.117267 |    0.015998 |    0.019357 |
+	  |  128000 |  18737.00 |    0.130777 |    0.015748 |    0.017628 |
+	  |  256000 |  38789.00 |    0.146840 |    0.015609 |    0.016106 |
+
+*: promedio de 10000 intentos por ser menor a 500 microsegundos.
+
+	Breve comentario:
+
+		En estas ejecuciones el primer valor está dentro del rango de lo normal. Nos 
+		quedaremos con una media de los valores de las tres ejecuciones.
+	
+		El tiempo de ejecución del algorimo se sitúa entre sus cotas subestimada y 
+		sobreestimada, siendo éstas respectivamente log(n)*pn^0.8 y n^0.98*log(n). 
+		Cabe destacar que las cotas están bastante ajustadas, ya que el crecimiento 
+		de t(n)/h(n) y  t(n)/f(n) hacia infinito o 0 respectivamente es muy lento.
+	
+		Observamos que la cota ajustada que proponemos si parece adecuada para el algoritmo, 
+		presentando este un crecimiento de O(n^0.98*log(n)). La constante a la que tiende 
+		la función t(n)/g(n) se sitúa en torno a 0.0156 .
+
+
+	Comparación de los dos algoritmos teniendo en cuenta su rendimiento y conclusiones:
+
+		Tras analizar ambos algoritmos, queda claro que el segundo es sumamente más eficiente
+		que el primero. Para un n de 32000, el primer algoritmo tarda un tiempo entorno a
+		2000000 microsegundos en el mejor caso, mientras que el segundo tan solo necesita
+		4400 microsegundos. La estrategia de divide y vencerás recursiva del segundo 
+		se muestra claramente superior a niveles de rendimiento que el uso de bucles anidados
+		del primero.
+
