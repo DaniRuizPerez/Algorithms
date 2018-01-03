@@ -1,25 +1,32 @@
-Sorting algorithms running time empirical study
+Prim MST running time empirical study
 ============
 
+This is an empirical study of the running time of different Prim's algorithm that we developed for the Algorithms course in my sophomore year of my BS in computer science at UDC (Spain). The given pseudocode is the following:
 
-This is an empirical study of the running time of different Sorting algorithms that we developed given the pseudocode in the images for the Algorithms course in my sophomore year of my BS in computer science at UDC (Spain). 
 
 
-For every version, we checked the running times of an upper bound, a lower bound and a tight bound as n grows and with different array initial conditions. This table is one of the cases, where  t(n)/h(n) tends to infinity, t(n)/g(n) to a constant and t(n)/f(n) to 0 correspondingly.
+<p align="center">
+<img src="https://github.com/DaniRuizPerez/Algorithms/blob/master/Prim/Prim.PNG" width="500">
+</p>
 
-h(n) = pow(n,0.7)
-g(n) = n
-f(n) = pow(n,1.2)
+
+
+
+We checked the running times of an upper bound, a lower bound and a tight bound as n grows and with different array initial conditions. This table is the resulting case, where  t(n)/h(n) tends to infinity, t(n)/g(n) to a constant and t(n)/f(n) to 0 correspondingly.
+
+h(n) = pow(n,1.93);
+g(n) = pow(n,2.065);
+f(n) = pow(n,2.5);
 
   |    n    |    t(n)   |  t(n)/h(n)  |  t(n)/g(n)  |  t(n)/f(n)  |
   |---------|-----------|-------------|-------------|-------------|
-  | *  1024 |      8.50 |    0.066444 |    0.008305 |    0.002076 |
-  | *  2048 |     16.73 |    0.080467 |    0.008170 |    0.001778 |
-  | *  4096 |     32.86 |    0.097270 |    0.008022 |    0.001520 |
-  | *  8192 |     66.17 |    0.120584 |    0.008077 |    0.001332 |
-  | * 16384 |    131.35 |    0.147348 |    0.008017 |    0.001151 |
-  | * 32768 |    267.42 |    0.184665 |    0.008161 |    0.001020 |
-  |   65536 |    503.00 |    0.213812 |    0.007675 |    0.000835 |
+  | *   128 |    209.24 |    0.017936 |    0.009317 |    0.001129 |
+  |     256 |    874.00 |    0.019661 |    0.009300 |    0.000834 |
+  |     512 |   3584.00 |    0.021158 |    0.009114 |    0.000604 |
+  |    1024 |  27820.00 |    0.043100 |    0.016908 |    0.000829 |
+  |    2048 | 129287.00 |    0.052564 |    0.018778 |    0.000681 |
+  |    4096 | 551767.00 |    0.058871 |    0.019153 |    0.000514 |
+  |    8192 |2311672.00 |    0.064727 |    0.019177 |    0.000381 |
 
 
 
