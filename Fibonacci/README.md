@@ -10,11 +10,12 @@ This is an empyrical study of the running time of different Fibonacci implenenta
 <img src="https://github.com/DaniRuizPerez/Algorithms/blob/master/Fibonacci/alg.PNG" width="500">
 </p>
 
+   |  subestimada         |    ajustada    |  sobreestimada |			
+
 
 For every version, we checked the running times of an upper bound (sobreestimada), a lower bound (subestimada) and a tight bound (ajustada) as n grows. This table is one of the cases, where  the bound tends to infinity, a constant and 0 correspondingly.
 
 
-   |  subestimada   |    ajustada    |  sobreestimada |			
    |    n   |     t(n)    |   t(n)/h(n)    |    t(n)/g(n)   |    t(n)/f(n)   |
    |--------|-------------|----------------|----------------|----------------|
    |    1000|    6.0123000|     0.0239354  |     0.0060123  |     0.0008704  |
