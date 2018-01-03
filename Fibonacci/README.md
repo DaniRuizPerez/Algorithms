@@ -2,7 +2,7 @@ Fibonacci implementations running time empirical study
 ============
 
 
-This is an empirical study of the running time of different Fibonacci implementations that I developed for the Algorithms course in my sophomore year of my BS in computer science at UDC (Spain). Implemented are the naive recursive version (fib1), the iterative version (fib2) and a more efficient version (fib3)
+This is an empirical study of the running time of different Fibonacci implementations that we developed for the Algorithms course in my sophomore year of my BS in computer science at UDC (Spain). Implemented are the naive recursive version (fib1), the iterative version (fib2) and a more efficient version (fib3). The given pseudocode is the following:
 
 
 
