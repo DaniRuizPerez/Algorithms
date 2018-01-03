@@ -2,7 +2,7 @@ Maximum Subarray implementations running time empirical study
 ============
 
 
-This is an empirical study of the running time of different Maximum Subarray implementations that I developed for the Algorithms course in my sophomore year of my BS in computer science at UDC (Spain).
+This is an empirical study of the running time of different Maximum Subarray implementations that we developed for the Algorithms course in my sophomore year of my BS in computer science at UDC (Spain). The given pseudocode is the following:
 
 
 <p align="center">
